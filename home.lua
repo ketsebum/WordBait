@@ -24,11 +24,13 @@ local scene = storyboard.newScene()
 --Start Button Pressed
 local startButtonPress = function( event )
 	print("Start button pressed")
-	storyboard.gotoScene( "scene2", "slideLeft", 800  )
+	storyboard.gotoScene( "play", "slideLeft", 400  )
 end
 
 local settingsButtonPress = function( event )
 	print("Settings button pressed")
+	storyboard.gotoScene( "settings", "slideLeft", 400  )
+
 end
 
 local standingsButtonPress = function( event )

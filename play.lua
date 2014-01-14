@@ -19,7 +19,7 @@ local centerY = display.contentCenterY
 local function onSceneTouch( self, event )
 	if event.phase == "began" then
 		
-		storyboard.gotoScene( "home", "slideRight", 800  )
+		storyboard.gotoScene( "home", "slideRight", 400  )
 		
 		return true
 	end
@@ -35,7 +35,7 @@ function scene:createScene( event )
 	
 	image.touch = onSceneTouch
 	
-	text1 = display.newText( "Scene 2", centerX, 50, native.systemFontBold, 24 )
+	text1 = display.newText( "Play", centerX, 50, native.systemFontBold, 24 )
 	text1:setFillColor( 1 )
 	screenGroup:insert( text1 )
 	
