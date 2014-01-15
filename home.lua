@@ -16,58 +16,33 @@
 ---------------------------------------------------------------------------------------
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
+local widget = require( "widget" ) -- Require the widget library
 
 -------------------------------------------
 -- *** Buttons Presses ***
 -------------------------------------------
 
---Start Button Pressed
+--Play Button Pressed
 local startButtonPress = function( event )
 	print("Start button pressed")
 	storyboard.gotoScene( "play", "slideLeft", 400  )
 end
-
+--Settings
 local settingsButtonPress = function( event )
 	print("Settings button pressed")
 	storyboard.gotoScene( "settings", "slideLeft", 400  )
-
 end
-
+--Global Standings button pressed
 local standingsButtonPress = function( event )
 	print("Standings button pressed")
-end
-
--- Note: currently this feature works in device builds or Xcode simulator builds only (also works on Corona Mac Simulator)
-local isAndroid = "Android" == system.getInfo("platformName")
-local inputFontSize = 18
-local inputFontHeight = 30
-tHeight = 30
-
-if isAndroid then
-	-- Android text fields have more chrome. It's either make them bigger, or make the font smaller.
-	-- We'll do both
-	inputFontSize = 14
-	inputFontHeight = 42
-	tHeight = 40
 end
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
     local group = self.view
 
-    -- Require the widget library
-	local widget = require( "widget" )
-	local tHeight		-- forward reference
-
 	display.setDefault( "anchorX", 0.0 )	-- default to TopLeft anchor point for new objects
 	display.setDefault( "anchorY", 0.0 )
-
-    -----------------------------------------------------------------------------
-
-    --  CREATE display objects and add them to 'group' here.
-    --  Example use-case: Restore 'group' from previously saved state.
-
-    -----------------------------------------------------------------------------
 
 	display.setDefault( "background", 80/255 )
 	local title = display.newText( "Word Bait", 50, 35, native.systemFont, 50 )
@@ -76,13 +51,11 @@ function scene:createScene( event )
     -------------------------------------------
 	-- *** Create Buttons ***
 	-------------------------------------------
-
-	-- "Remove Default" Button
 	startButton = widget.newButton
 	{
 		defaultFile = "buttonBlue.png",
 		overFile = "buttonBlueOver.png",
-		label = "Start",
+		label = "Play",
 		labelColor = 
 		{ 
 			default = { 1, 1, 1 }, 
@@ -91,8 +64,6 @@ function scene:createScene( event )
 		emboss = true,
 		onPress = startButtonPress,
 	}
-
-	-- "Remove Number" Button
 	settingsButton = widget.newButton
 	{
 		defaultFile = "buttonBlue.png",
@@ -106,8 +77,6 @@ function scene:createScene( event )
 		emboss = true,
 		onPress = settingsButtonPress,
 	}
-
-
 	standingsButton = widget.newButton
 	{
 		defaultFile = "buttonBlue.png",

@@ -5,6 +5,7 @@
 ---------------------------------------------------------------------------------
 
 local storyboard = require( "storyboard" )
+local widget = require( "widget" ) -- Require the widget library
 local scene = storyboard.newScene()
 
 ---------------------------------------------------------------------------------
@@ -25,28 +26,63 @@ local function onSceneTouch( self, event )
 	end
 end
 
+local compButtonPress = function( event )
+	print("Start button pressed")
+end
+
+local multiButtonPress = function( event )
+	print("Settings button pressed")
+end
+
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
-	
+
 	image = display.newImage( "bg2.jpg", centerX, centerY )
-	screenGroup:insert( image )
-	
 	image.touch = onSceneTouch
+
+	display.setDefault( "anchorX", 0.0 )	-- default to TopLeft anchor point for new objects
+	display.setDefault( "anchorY", 0.0 )
 	
-	text1 = display.newText( "Play", centerX, 50, native.systemFontBold, 24 )
-	text1:setFillColor( 1 )
-	screenGroup:insert( text1 )
+	playText = display.newText( "Play", centerX, 50, native.systemFontBold, 24 )
+	playText:setFillColor( 1 )
+
+	compButton = widget.newButton
+	{
+		defaultFile = "buttonBlue.png",
+		overFile = "buttonBlueOver.png",
+		label = "Solo Play",
+		labelColor = 
+		{ 
+			default = { 1, 1, 1 }, 
+		},
+		fontSize = 20,
+		emboss = true,
+		onPress = compButtonPress,
+	}
+	multiButton = widget.newButton
+	{
+		defaultFile = "buttonBlue.png",
+		overFile = "buttonBlueOver.png",
+		label = "Multiplayer",
+		labelColor = 
+		{ 
+			default = { 1, 1, 1 }, 
+		},
+		fontSize = 20,
+		emboss = true,
+		onPress = multiButtonPress,
+	}
+
+		-- Position the buttons on screen
+	compButton.x = display.contentCenterX - compButton.contentWidth/2;	compButton.y = 305
+	multiButton.x =  display.contentCenterX - multiButton.contentWidth/2;	multiButton.y = 370
 	
-	text2 = display.newText( "MemUsage: ", centerX, centerY, native.systemFont, 16 )
-	text2:setFillColor( 1 )
-	screenGroup:insert( text2 )
-	
-	text3 = display.newText( "Touch to continue.", centerX, display.contentHeight - 100, native.systemFontBold, 18 )
-	text3:setFillColor( 1 ); text3.isVisible = false
-	screenGroup:insert( text3 )
-	
+	screenGroup:insert( image )
+	screenGroup:insert( playText )
+	screenGroup:insert(compButton)
+	screenGroup:insert(multiButton)
 	print( "\n2: createScene event" )
 end
 
@@ -58,15 +94,9 @@ function scene:enterScene( event )
 	storyboard.removeAll()
 	-- remove previous scene's view
 	storyboard.purgeScene( "home" )
+	image:addEventListener( "touch", image )
 	
 	-- Update Lua memory text display
-	local showMem = function()
-		image:addEventListener( "touch", image )
-		text3.isVisible = true
-		text2.text = text2.text .. collectgarbage("count")/1000 .. "MB"
-		text2.x = centerX
-	end
-	memTimer = timer.performWithDelay( 1000, showMem, 1 )
 end
 
 
@@ -77,12 +107,6 @@ function scene:exitScene()
 	
 	-- remove touch listener for image
 	image:removeEventListener( "touch", image )
-	
-	-- cancel timer
-	timer.cancel( memTimer ); memTimer = nil;
-	
-	-- reset label text
-	text2.text = "MemUsage: "
 end
 
 
