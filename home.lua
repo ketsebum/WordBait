@@ -55,7 +55,7 @@ function scene:createScene( event )
 	{
 		defaultFile = "buttonBlue.png",
 		overFile = "buttonBlueOver.png",
-		label = "Play",
+		label = "Solo Play",
 		labelColor = 
 		{ 
 			default = { 1, 1, 1 }, 
@@ -63,6 +63,19 @@ function scene:createScene( event )
 		fontSize = 20,
 		emboss = true,
 		onPress = startButtonPress,
+	}
+	multiButton = widget.newButton
+	{
+		defaultFile = "buttonBlue.png",
+		overFile = "buttonBlueOver.png",
+		label = "Multiplayer",
+		labelColor = 
+		{ 
+			default = { 1, 1, 1 }, 
+		},
+		fontSize = 20,
+		emboss = true,
+		onPress = multiButtonPress,
 	}
 	settingsButton = widget.newButton
 	{
@@ -92,7 +105,8 @@ function scene:createScene( event )
 	}
 
 	-- Position the buttons on screen
-	startButton.x = display.contentCenterX - startButton.contentWidth/2;	startButton.y = 305
+	startButton.x = display.contentCenterX - startButton.contentWidth/2;	startButton.y = 240
+	multiButton.x =  display.contentCenterX - multiButton.contentWidth/2;	multiButton.y = 305
 	settingsButton.x =  display.contentCenterX - settingsButton.contentWidth/2;	settingsButton.y = 370
 	standingsButton.x =  display.contentCenterX - standingsButton.contentWidth/2;	standingsButton.y = 435
 
@@ -100,6 +114,7 @@ function scene:createScene( event )
 	--When scene ends, these items disappear
 	group:insert(title)
 	group:insert(startButton)
+	group:insert( multiButton)
 	group:insert(settingsButton)
 	group:insert(standingsButton)
 
