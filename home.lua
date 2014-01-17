@@ -27,6 +27,10 @@ local startButtonPress = function( event )
 	print("Start button pressed")
 	storyboard.gotoScene( "play", "slideLeft", 400  )
 end
+--Multiplayer
+local multiButtonPress = function( event )
+	print("Multiplayer button pressed")
+end
 --Settings
 local settingsButtonPress = function( event )
 	print("Settings button pressed")
