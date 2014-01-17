@@ -26,84 +26,11 @@ local function onSceneTouch( self, event )
 	end
 end
 
-local easyButtonPress = function( event )
-	print("Start button pressed")
-	storyboard.gotoScene( "easyComp", "slideLeft", 400  )
-end
-
-local mediButtonPress = function( event )
-	print("Settings button pressed")
-end
-
-local hardButtonPress = function( event )
-	print("Settings button pressed")
-end
-
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local screenGroup = self.view
 
-	image = display.newImage( "bg2.jpg", centerX, centerY )
-	image.touch = onSceneTouch
-
-	display.setDefault( "anchorX", 0.0 )	-- default to TopLeft anchor point for new objects
-	display.setDefault( "anchorY", 0.0 )
-	
-	playText = display.newText( "Play", centerX, 50, native.systemFontBold, 24 )
-	playText:setFillColor( 1 )
-
-	easyButton = widget.newButton
-	{
-		defaultFile = "buttonBlue.png",
-		overFile = "buttonBlueOver.png",
-		label = "Easy",
-		labelColor = 
-		{ 
-			default = { 1, 1, 1 }, 
-		},
-		fontSize = 20,
-		emboss = true,
-		onPress = easyButtonPress,
-	}
-	mediButton = widget.newButton
-	{
-		defaultFile = "buttonBlue.png",
-		overFile = "buttonBlueOver.png",
-		label = "Medium",
-		labelColor = 
-		{ 
-			default = { 1, 1, 1 }, 
-		},
-		fontSize = 20,
-		emboss = true,
-		onPress = mediButtonPress,
-	}
-	hardButton = widget.newButton
-	{
-		defaultFile = "buttonBlue.png",
-		overFile = "buttonBlueOver.png",
-		label = "Hard",
-		labelColor = 
-		{ 
-			default = { 1, 1, 1 }, 
-		},
-		fontSize = 20,
-		emboss = true,
-		onPress = mediButtonPress,
-	}
-
-		-- Position the buttons on screen
-	easyButton.x = display.contentCenterX - easyButton.contentWidth/2;	easyButton.y = 305
-	mediButton.x =  display.contentCenterX - mediButton.contentWidth/2;	mediButton.y = 370
-	hardButton.x =  display.contentCenterX - hardButton.contentWidth/2;	hardButton.y = 435
-	
-	screenGroup:insert( image )
-	screenGroup:insert( playText )
-	screenGroup:insert(easyButton)
-	screenGroup:insert(mediButton)
-	screenGroup:insert(hardButton)
-	print( "\n2: createScene event" )
 end
 
 
