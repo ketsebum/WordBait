@@ -130,6 +130,9 @@ function scene:enterScene( event )
     local group = self.view
 
     print("entered")
+	storyboard.removeAll()
+	-- remove previous scene's view
+	storyboard.purgeScene( "play" )
 
     -----------------------------------------------------------------------------
 

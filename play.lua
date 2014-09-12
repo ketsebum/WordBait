@@ -12,7 +12,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-local image, text1, text2, text3, memTimer
+local image, text1, text2, text3
 
 local centerX = display.contentCenterX
 local centerY = display.contentCenterY
@@ -24,6 +24,11 @@ local function onSceneTouch( self, event )
 		
 		return true
 	end
+end
+
+local homeButtonPress = function( event )
+	print("Home button pressed")
+	storyboard.gotoScene( "home", "slideRight", 400  )
 end
 
 local easyButtonPress = function( event )
@@ -44,13 +49,10 @@ end
 function scene:createScene( event )
 	local screenGroup = self.view
 
-	image = display.newImage( "bg2.jpg", centerX, centerY )
-	image.touch = onSceneTouch
-
 	display.setDefault( "anchorX", 0.0 )	-- default to TopLeft anchor point for new objects
 	display.setDefault( "anchorY", 0.0 )
 	
-	playText = display.newText( "Play", centerX, 50, native.systemFontBold, 24 )
+	playText = display.newText( "Play", centerX-15, 50, native.systemFontBold, 24 )
 	playText:setFillColor( 1 )
 
 	easyButton = widget.newButton
@@ -92,17 +94,26 @@ function scene:createScene( event )
 		emboss = true,
 		onPress = mediButtonPress,
 	}
+	homeButton = widget.newButton
+	{
+		id = "arrow",
+		defaultFile = "buttonArrow.png",
+		overFile = "buttonArrowOver.png",
+		onEvent = homeButtonPress,
+	}
+
 
 		-- Position the buttons on screen
 	easyButton.x = display.contentCenterX - easyButton.contentWidth/2;	easyButton.y = 305
 	mediButton.x =  display.contentCenterX - mediButton.contentWidth/2;	mediButton.y = 370
 	hardButton.x =  display.contentCenterX - hardButton.contentWidth/2;	hardButton.y = 435
-	
-	screenGroup:insert( image )
+	homeButton.x = 0;	homeButton.y = 0
+
 	screenGroup:insert( playText )
 	screenGroup:insert(easyButton)
 	screenGroup:insert(mediButton)
 	screenGroup:insert(hardButton)
+	screenGroup:insert(homeButton)
 	print( "\n2: createScene event" )
 end
 
@@ -114,7 +125,6 @@ function scene:enterScene( event )
 	storyboard.removeAll()
 	-- remove previous scene's view
 	storyboard.purgeScene( "home" )
-	image:addEventListener( "touch", image )
 	
 	-- Update Lua memory text display
 end
@@ -124,9 +134,6 @@ end
 function scene:exitScene()
 	
 	print( "2: exitScene event" )
-	
-	-- remove touch listener for image
-	image:removeEventListener( "touch", image )
 end
 
 
